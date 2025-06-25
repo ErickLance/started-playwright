@@ -1,7 +1,7 @@
 // @ts-check
 const { test, expect } = require('@playwright/test');
 
-test.describe('Testes de Login - SauceDemo', () => {
+test.describe('Testes de Autenticação - SauceDemo', () => {
 
   test.beforeEach(async ({ page }) => {
     // Arrange
@@ -51,5 +51,22 @@ test.describe('Testes de Login - SauceDemo', () => {
     // Assert
     await expect(page.locator('[data-test="error"]')).toHaveText(/Username is required/i);
   });
+
+  test.only('logouth', async ({ page }) => {
+    // Act
+    await page.fill('[data-test="username"]', 'standard_user');
+    await page.fill('[data-test="password"]', 'secret_sauce');
+    await page.click('[data-test="login-button"]');
+
+    await expect(page).toHaveURL('https://www.saucedemo.com/inventory.html');
+
+    await page.getByRole('button', { name: 'Open Menu'}).click()
+    const logoutButton = page.getByText('Logout');
+    await expect(logoutButton).toBeVisible();
+    await logoutButton.click();
+
+    await expect(page.locator('[data-test="login-button"]')).toBeVisible();
+
+  })
 
 });
