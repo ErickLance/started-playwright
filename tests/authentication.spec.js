@@ -52,7 +52,7 @@ test.describe('Testes de Autenticação - SauceDemo', () => {
     await expect(page.locator('[data-test="error"]')).toHaveText(/Username is required/i);
   });
 
-  test.only('logouth', async ({ page }) => {
+  test('logouth', async ({ page }) => {
     // Act
     await page.fill('[data-test="username"]', 'standard_user');
     await page.fill('[data-test="password"]', 'secret_sauce');
